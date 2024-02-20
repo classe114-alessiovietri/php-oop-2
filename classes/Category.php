@@ -1,8 +1,10 @@
 <?php
 
+require_once __DIR__.'/../traits/HasName.php';
+
 class Category {
 
-    public $name;
+    use HasName;
 
     public function __construct(
         $name

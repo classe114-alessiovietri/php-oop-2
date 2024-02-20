@@ -11,37 +11,57 @@
 
     $allProducts = [];
 
-    $prodottoGenerico = new Product(
-        'Prodotto Generico',
-        'https://www.repstatic.it/content/nazionale/img/2024/02/17/143814201-7f940fca-0619-41bb-817c-02f794e586d1.jpg',
-        7.99,
-        30,
-        'Un bel prodotto generico',
-        $dogsCategory
-    );
-    $allProducts[] = $prodottoGenerico;
+    try {
+        $prodottoGenerico = new Product(
+            'Prodotto Generico',
+            'https://www.repstatic.it/content/nazionale/img/2024/02/17/143814201-7f940fca-0619-41bb-817c-02f794e586d1.jpg',
+            7.99,
+            $_GET['q1'],
+            'Un bel prodotto generico',
+            $dogsCategory
+        );
+        $allProducts[] = $prodottoGenerico;
+    }
+    catch (Exception $e) {
+        // Viene eseguito nel caso in cui si verifichi l'errore
+        echo '<h4 style="color: red;">Valore quantità prodotto generico non valido!</h4>';
+    }
 
-    $frisbee = new Toy(
-        'Frisbee',
-        'Plastica',
-        'https://www.repstatic.it/content/nazionale/img/2024/02/17/143814201-7f940fca-0619-41bb-817c-02f794e586d1.jpg',
-        12.99,
-        123,
-        'Un bel Frisbee',
-        $dogsCategory
-    );
-    $allProducts[] = $frisbee;
+    try{
+        $frisbee = new Toy(
+            'Frisbee',
+            'Plastica',
+            'https://www.repstatic.it/content/nazionale/img/2024/02/17/143814201-7f940fca-0619-41bb-817c-02f794e586d1.jpg',
+            12.99,
+            $_GET['q2'],
+            'Un bel Frisbee',
+            $dogsCategory
+        );
+        $allProducts[] = $frisbee;
+    }
+    catch (Exception $e) {
+        var_dump($e);
+        
+        // Viene eseguito nel caso in cui si verifichi l'errore
+        echo '<h4 style="color: red;">ERRORE: '.$e->getMessage().'</h4>';
+    }
 
-    $food = new Food(
-        'Croccantini',
-        '20/03/2024',
-        'https://www.repstatic.it/content/nazionale/img/2024/02/17/143814201-7f940fca-0619-41bb-817c-02f794e586d1.jpg',
-        5.99,
-        56,
-        'Croccantini al mango',
-        $catsCategory
-    );
-    $allProducts[] = $food;
+    try{
+        $food = new Food(
+            'Croccantini',
+            '20/03/2024',
+            'https://www.repstatic.it/content/nazionale/img/2024/02/17/143814201-7f940fca-0619-41bb-817c-02f794e586d1.jpg',
+            5.99,
+            $_GET['q3'],
+            'Croccantini al mango',
+            $catsCategory
+        );
+        $allProducts[] = $food;
+    }
+    catch (Exception $e) {
+        // Viene eseguito nel caso in cui si verifichi l'errore
+        echo '<h4 style="color: red;">Valore quantità croccantini non valido!</h4>';
+    }
 ?>
 
 <!DOCTYPE html>
@@ -84,11 +104,11 @@
                                 <img src="<?php echo $singleProduct->image; ?>" class="card-img-top">
                                 <div class="card-body">
                                     <h3>
-                                        <?php echo $singleProduct->name; ?>
+                                        <?php echo $singleProduct->getName(); ?>
                                     </h3>
                                     <ul>
                                         <li>
-                                            Categoria: <?php echo $singleProduct->category->name; ?>
+                                            Categoria: <?php echo $singleProduct->category->getName(); ?>
                                         </li>
                                         <li>
                                             € <?php echo $singleProduct->price; ?>
